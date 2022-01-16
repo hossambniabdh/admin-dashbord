@@ -32,7 +32,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('employee', EmployeeController::class)->middleware('auth');
 Route::resource('company', CompanyController::class)->middleware('auth');
 Route::get('/update', 'EmployeeController@update')->name('update')->middleware('auth');
-Route::get('/delete', 'EmployeeController@destroy')->name('delete');
+Route::get('/delete', 'EmployeeController@destroy')->name('delete')->middleware('auth');
 
 Route::get('/updatecom', 'CompanyController@update')->name('updatecom')->middleware('auth');
 Route::get('/deletecom', 'CompanyController@destroy')->name('deletecom')->middleware('auth');
