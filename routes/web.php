@@ -17,7 +17,12 @@ use Illuminate\Support\Facades\Auth;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+
+    if (Auth::user()) {
+        return Redirect()->action('HomeController@index');
+    } else {
+        return view('auth/login');
+    }
 });
 
 Auth::routes();
@@ -26,8 +31,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('employee', EmployeeController::class)->middleware('auth');
 Route::resource('company', CompanyController::class)->middleware('auth');
-Route::get('/update', 'EmployeeController@update')->name('update');
+Route::get('/update', 'EmployeeController@update')->name('update')->middleware('auth');
 Route::get('/delete', 'EmployeeController@destroy')->name('delete');
 
-Route::get('/updatecom', 'CompanyController@update')->name('updatecom');
-Route::get('/deletecom', 'CompanyController@destroy')->name('deletecom');
+Route::get('/updatecom', 'CompanyController@update')->name('updatecom')->middleware('auth');
+Route::get('/deletecom', 'CompanyController@destroy')->name('deletecom')->middleware('auth');
